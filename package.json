@@ -1,0 +1,64 @@
+{
+  "name": "matamarcianos",
+  "version": "1.0.0",
+  "author": "David Barragán <bameda@gmail.com>",
+  "license": "MIT",
+  "description": "A simple shoot'em up game made with Phaser.",
+  "keywords": [
+    "game",
+    "shoot'em up",
+    "phaser",
+    "matamarcianos"
+  ],
+  "private": true,
+  "main": "src/game.ts",
+  "scripts": {
+    "setup": "husky install .husky",
+    "start": "rollup --watch --config rollup.config.dev.mjs",
+    "build:dev": "rollup --config rollup.config.dev.mjs",
+    "build:pro": "rollup --config rollup.config.dist.mjs",
+    "lib:check": "updates check",
+    "lib:upgrade": "updates --update"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.tsx": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.mjs": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-replace": "^5.0.5",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "phaser": "^3.70.0",
+    "prettier": "^3.1.1",
+    "rollup": "^4.9.1",
+    "rollup-plugin-auto-reload": "^1.0.3",
+    "rollup-plugin-serve": "^2.0.2",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3",
+    "updates": "^15.0.4"
+  }
+}
