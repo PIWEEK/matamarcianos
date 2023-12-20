@@ -14,7 +14,15 @@ export default class Level extends Phaser.Scene {
     this.load.image(AssetTypes.Background, AssetSrc.Background);
 
     // Enemies
-    this.load.spritesheet(AssetTypes.Enemy, AssetSrc.Enemy, {
+    this.load.spritesheet(AssetTypes.EnemyAlan, AssetSrc.EnemyAlan, {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
+    this.load.spritesheet(AssetTypes.EnemyBonbon, AssetSrc.EnemyBonbon, {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
+    this.load.spritesheet(AssetTypes.EnemyLips, AssetSrc.EnemyLips, {
       frameWidth: 16,
       frameHeight: 16,
     });

@@ -2,10 +2,14 @@ const ASSET_SRC_DIR = "assets";
 
 export enum AssetTypes {
   Background = "asset-background",
-  Enemy = "asset-enemy",
+  EnemyAlan = "asset-enemy-alan",
+  EnemyBonbon = "asset-enemy-bonbon",
+  EnemyLips = "asset-enemy-lips",
 }
 
 export enum AssetSrc {
   Background = `${ASSET_SRC_DIR}/minipixelpack3/space_bg.png`,
-  Enemy = `${ASSET_SRC_DIR}/minipixelpack3/enemies/alan_sp.png`,
+  EnemyAlan = `${ASSET_SRC_DIR}/minipixelpack3/enemies/alan_sp.png`,
+  EnemyBonbon = `${ASSET_SRC_DIR}/minipixelpack3/enemies/bonbon_sp.png`,
+  EnemyLips = `${ASSET_SRC_DIR}/minipixelpack3/enemies/lips_sp.png`,
 }

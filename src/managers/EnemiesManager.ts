@@ -1,8 +1,32 @@
 import * as Phaser from "phaser";
-
 import { AnimationTypes } from "../animations";
-
 import Enemy from "../objects/Enemy";
+import { AssetTypes } from "../assets";
+
+const ORIGIN_X = 100;
+const ORIGIN_Y = 100;
+const ENEMY_ROWS = [
+  {
+    y: 0,
+    type: AssetTypes.EnemyLips,
+    animation: AnimationTypes.EnemyLips,
+  },
+  {
+    y: 1,
+    type: AssetTypes.EnemyBonbon,
+    animation: AnimationTypes.EnemyBonbon,
+  },
+  {
+    y: 2,
+    type: AssetTypes.EnemyAlan,
+    animation: AnimationTypes.EnemyAlan,
+  },
+  {
+    y: 3,
+    type: AssetTypes.EnemyAlan,
+    animation: AnimationTypes.EnemyAlan,
+  },
+];
 
 export default class EnemiesManager {
   enemies: Phaser.Physics.Arcade.Group;
@@ -24,17 +48,17 @@ export default class EnemiesManager {
   }
 
   private _create() {
-    const ORIGIN_X = 100;
-    const ORIGIN_Y = 100;
-
-    for (let y = 0; y < 4; y++) {
+    for (const { y, type, animation } of ENEMY_ROWS) {
       for (let x = 0; x < 10; x++) {
-        const enemy: Enemy = this.enemies.create(
+        const enemy: Enemy = new Enemy(
+          this._scene,
           ORIGIN_X + x * 36,
-          ORIGIN_Y + y * 36
+          ORIGIN_Y + y * 36,
+          type
         );
+        this.enemies.add(enemy, true);
         enemy.setOrigin(0, 0);
-        enemy.play(AnimationTypes.Enemy);
+        enemy.play(animation);
         enemy.setImmovable(false);
       }
     }
