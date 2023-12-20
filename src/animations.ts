@@ -13,7 +13,7 @@ export function initializeAnimations(scene: Phaser.Scene) {
       start: 0,
       end: 5,
     }),
-    frameRate: 10,
+    frameRate: 8,
     repeat: -1,
   });
 
@@ -23,7 +23,7 @@ export function initializeAnimations(scene: Phaser.Scene) {
       start: 0,
       end: 5,
     }),
-    frameRate: 10,
+    frameRate: 8,
     repeat: -1,
   });
 
@@ -33,7 +33,7 @@ export function initializeAnimations(scene: Phaser.Scene) {
       start: 0,
       end: 5,
     }),
-    frameRate: 10,
+    frameRate: 8,
     repeat: -1,
   });
 }

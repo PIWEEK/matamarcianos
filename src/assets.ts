@@ -5,6 +5,7 @@ export enum AssetTypes {
   EnemyAlan = "asset-enemy-alan",
   EnemyBonbon = "asset-enemy-bonbon",
   EnemyLips = "asset-enemy-lips",
+  Ship = "asset-ship",
 }
 
 export enum AssetSrc {
@@ -12,4 +13,5 @@ export enum AssetSrc {
   EnemyAlan = `${ASSET_SRC_DIR}/minipixelpack3/enemies/alan_sp.png`,
   EnemyBonbon = `${ASSET_SRC_DIR}/minipixelpack3/enemies/bonbon_sp.png`,
   EnemyLips = `${ASSET_SRC_DIR}/minipixelpack3/enemies/lips_sp.png`,
+  Ship = `${ASSET_SRC_DIR}/minipixelpack3/ship/ship.png`,
 }

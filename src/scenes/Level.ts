@@ -3,10 +3,17 @@ import { AssetTypes, AssetSrc } from "../assets";
 import { initializeAnimations } from "../animations";
 
 import EnemiesManager from "../managers/EnemiesManager";
+import ShipManager from "../managers/ShipManager";
 
 export default class Level extends Phaser.Scene {
+  private _enemiesManager: EnemiesManager;
+  private _shipManager: ShipManager;
+
   constructor() {
     super("level");
+
+    this._enemiesManager = new EnemiesManager(this);
+    this._shipManager = new ShipManager(this);
   }
 
   preload() {
@@ -26,22 +33,29 @@ export default class Level extends Phaser.Scene {
       frameWidth: 16,
       frameHeight: 16,
     });
+
+    // Ship
+    this.load.spritesheet(AssetTypes.Ship, AssetSrc.Ship, {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
   }
 
   create() {
-    // Initialize animations
+    // animations
     initializeAnimations(this);
-
-    // Set background
+    // background
     this.add.tileSprite(400, 300, 800, 600, AssetTypes.Background);
-
-    // Create enemies
-    new EnemiesManager(this);
+    // enemies
+    this._enemiesManager.initialize();
+    // ship
+    this._shipManager.initialize();
   }
 
   update() {}
 
-  // restart() {
-  //   if (this._enemiesManager) this._enemiesManager.reset();
-  // }
+  restart() {
+    this._enemiesManager.reset();
+    this._shipManager.reset();
+  }
 }
