@@ -9,11 +9,8 @@ const config: Phaser.Types.Core.GameConfig = {
   height: 600,
   physics: {
     default: "arcade",
-    arcade: {
-      gravity: { y: 0 },
-    },
   },
-  scene: [Level],
+  scene: Level,
 };
 
 export default new Phaser.Game(config);

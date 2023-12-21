@@ -2,16 +2,22 @@ import * as Phaser from "phaser";
 import { AssetTypes, AssetSrc } from "../assets";
 import { initializeAnimations } from "../animations";
 
+import BackgroundManager from "../managers/BackgroundManager";
 import EnemiesManager from "../managers/EnemiesManager";
 import ShipManager from "../managers/ShipManager";
 
 export default class Level extends Phaser.Scene {
+  private _backgroundManager: BackgroundManager;
   private _enemiesManager: EnemiesManager;
   private _shipManager: ShipManager;
+
+  private _cursorsKeys?: Phaser.Types.Input.Keyboard.CursorKeys;
+  private _fireKey?: Phaser.Input.Keyboard.Key;
 
   constructor() {
     super("level");
 
+    this._backgroundManager = new BackgroundManager(this);
     this._enemiesManager = new EnemiesManager(this);
     this._shipManager = new ShipManager(this);
   }
@@ -42,17 +48,21 @@ export default class Level extends Phaser.Scene {
   }
 
   create() {
-    // animations
+    this._cursorsKeys = this.input.keyboard!.createCursorKeys();
+    this._fireKey = this.input.keyboard!.addKey(
+      Phaser.Input.Keyboard.KeyCodes.SPACE
+    );
+
     initializeAnimations(this);
-    // background
-    this.add.tileSprite(400, 300, 800, 600, AssetTypes.Background);
-    // enemies
+    this._backgroundManager.initialize();
     this._enemiesManager.initialize();
-    // ship
-    this._shipManager.initialize();
+    this._shipManager.initialize(this._cursorsKeys, this._fireKey);
   }
 
-  update() {}
+  update() {
+    this._backgroundManager.update();
+    this._shipManager.update();
+  }
 
   restart() {
     this._enemiesManager.reset();
