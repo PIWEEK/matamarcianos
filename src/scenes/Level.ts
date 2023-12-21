@@ -8,8 +8,8 @@ import ShipManager from "../managers/ShipManager";
 
 export default class Level extends Phaser.Scene {
   private _backgroundManager: BackgroundManager;
-  private _enemiesManager: EnemiesManager;
-  private _shipManager: ShipManager;
+  private enemiesManager: EnemiesManager;
+  private shipManager: ShipManager;
 
   private _cursorsKeys?: Phaser.Types.Input.Keyboard.CursorKeys;
   private _fireKey?: Phaser.Input.Keyboard.Key;
@@ -18,8 +18,9 @@ export default class Level extends Phaser.Scene {
     super("level");
 
     this._backgroundManager = new BackgroundManager(this);
-    this._enemiesManager = new EnemiesManager(this);
-    this._shipManager = new ShipManager(this);
+
+    this.enemiesManager = new EnemiesManager(this);
+    this.shipManager = new ShipManager(this);
   }
 
   preload() {
@@ -39,9 +40,17 @@ export default class Level extends Phaser.Scene {
       frameWidth: 16,
       frameHeight: 16,
     });
+    this.load.spritesheet(AssetTypes.EnemyBullet, AssetSrc.EnemyBullet, {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
 
     // Ship
     this.load.spritesheet(AssetTypes.Ship, AssetSrc.Ship, {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
+    this.load.spritesheet(AssetTypes.ShipBullet, AssetSrc.ShipBullet, {
       frameWidth: 16,
       frameHeight: 16,
     });
@@ -55,17 +64,18 @@ export default class Level extends Phaser.Scene {
 
     initializeAnimations(this);
     this._backgroundManager.initialize();
-    this._enemiesManager.initialize();
-    this._shipManager.initialize(this._cursorsKeys, this._fireKey);
+    this.enemiesManager.initialize();
+    this.shipManager.initialize(this._cursorsKeys, this._fireKey);
   }
 
   update() {
     this._backgroundManager.update();
-    this._shipManager.update();
+    this.enemiesManager.update();
+    this.shipManager.update();
   }
 
   restart() {
-    this._enemiesManager.reset();
-    this._shipManager.reset();
+    this.enemiesManager.reset();
+    this.shipManager.reset();
   }
 }

@@ -1,11 +1,13 @@
 import * as Phaser from "phaser";
 import Ship from "../objects/Ship";
+import ShipBullet from "../objects/ShipBullet";
 
 const ORIGIN_Y = 500;
 const ORIGIN_X = 392;
 
 export default class ShipManager {
   private _ship?: Phaser.Physics.Arcade.Sprite;
+  private _bullets?: Phaser.Physics.Arcade.Group;
   private _cursorsKeys?: Phaser.Types.Input.Keyboard.CursorKeys;
   private _fireKey?: Phaser.Input.Keyboard.Key;
 
@@ -15,6 +17,13 @@ export default class ShipManager {
     if (!this._ship) throw new Error("ShipManager: ship not initialized");
 
     return this._ship;
+  }
+
+  public get bullets() {
+    if (!this._bullets)
+      throw new Error("ShipManager: bullets group not initialized");
+
+    return this._bullets;
   }
 
   public get cursorsKeys() {
@@ -36,7 +45,15 @@ export default class ShipManager {
   ) {
     this._cursorsKeys = cursorsKeys;
     this._fireKey = fireKey;
+
     this._ship = new Ship(this._scene, ORIGIN_X, ORIGIN_Y);
+
+    this._bullets = this._scene.physics.add.group({
+      max: 0,
+      classType: ShipBullet,
+      runChildUpdate: true,
+    });
+    this.bullets.setOrigin(0.5, 1);
   }
 
   update() {
@@ -52,12 +69,21 @@ export default class ShipManager {
       shipBody.setVelocityX(200);
     }
 
-    // if (this.fireKey.isDown) {
-    //   this._fireBullet();
-    // }
+    if (this.fireKey.isDown) {
+      this._fireBullet();
+    }
   }
 
   reset() {
     this.ship.setPosition(ORIGIN_X, ORIGIN_Y);
+  }
+
+  _fireBullet() {
+    const bullet: ShipBullet = this.bullets.get();
+
+    if (bullet) {
+      bullet.setPosition(this.ship.x, this.ship.y);
+      this._scene.physics.moveTo(bullet, this.ship.x, -1000, 120);
+    }
   }
 }
