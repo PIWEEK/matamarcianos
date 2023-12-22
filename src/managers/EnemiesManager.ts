@@ -1,8 +1,7 @@
 import * as Phaser from "phaser";
 import Enemy from "../objects/Enemy";
 import EnemyBullet from "../objects/EnemyBullet";
-import { AssetTypes } from "../assets";
-import { AnimationTypes } from "../animations";
+import { AssetTypes, EnemiesAssetTypes } from "../assets";
 
 const MARGIN_X = 100;
 const MARGIN_Y = 100;
@@ -13,27 +12,11 @@ const ENEMY_WITH = 16;
 const ENEMY_HEIGHT = 16;
 
 const ENEMIES_PER_ROW = 12;
-const ENEMY_ROWS = [
-  {
-    y: 0,
-    type: AssetTypes.EnemyLips,
-    animation: AnimationTypes.EnemyLips,
-  },
-  {
-    y: 1,
-    type: AssetTypes.EnemyBonbon,
-    animation: AnimationTypes.EnemyBonbon,
-  },
-  {
-    y: 2,
-    type: AssetTypes.EnemyAlan,
-    animation: AnimationTypes.EnemyAlan,
-  },
-  {
-    y: 3,
-    type: AssetTypes.EnemyAlan,
-    animation: AnimationTypes.EnemyAlan,
-  },
+const ENEMY_ROWS: EnemiesAssetTypes[] = [
+  AssetTypes.EnemyLips,
+  AssetTypes.EnemyBonbon,
+  AssetTypes.EnemyAlan,
+  AssetTypes.EnemyAlan,
 ];
 const SHOT_FREQUENCY = 400; // ms
 
@@ -71,13 +54,12 @@ export default class EnemiesManager {
       classType: EnemyBullet,
       runChildUpdate: true,
     });
-    this.bullets.setOrigin(0.5, 1);
 
     this.reset();
   }
 
   update() {
-    if (this._scene.time.now > this._shottingTime) this._shot();
+    if (this._scene.time.now > this._shottingTime) this._fireBullet();
   }
 
   reset() {
@@ -87,7 +69,7 @@ export default class EnemiesManager {
   }
 
   private _populateEnemiesGroup() {
-    for (const { y, type, animation } of ENEMY_ROWS) {
+    for (const [y, type] of ENEMY_ROWS.entries()) {
       for (let x = 0; x < ENEMIES_PER_ROW; x++) {
         const enemy: Enemy = new Enemy(
           this._scene,
@@ -96,8 +78,6 @@ export default class EnemiesManager {
           type
         );
         this.enemies.add(enemy, true);
-        enemy.play(animation);
-        enemy.setImmovable(false);
       }
     }
     this._animateEnimiesGroup();
@@ -128,7 +108,7 @@ export default class EnemiesManager {
     return this.enemies.children.getArray()[random] as Enemy;
   }
 
-  private _shot() {
+  private _fireBullet() {
     const bullet: EnemyBullet = this.bullets.get();
     const enemy: Enemy = this._getRandomEnemy();
 

@@ -6,9 +6,11 @@ export enum AnimationTypes {
   EnemyLips = "animation-enemy-lips",
   EnemyBullet = "animation-enemy-bullet",
   ShipBullet = "animation-ship-bullet",
+  Explosion = "animation-explosion",
 }
 
 export function initializeAnimations(scene: Phaser.Scene) {
+  // Enemies
   scene.anims.create({
     key: AnimationTypes.EnemyAlan,
     frames: scene.anims.generateFrameNumbers(AssetTypes.EnemyAlan, {
@@ -48,6 +50,8 @@ export function initializeAnimations(scene: Phaser.Scene) {
     frameRate: 8,
     repeat: -1,
   });
+
+  // Ship
   scene.anims.create({
     key: AnimationTypes.ShipBullet,
     frames: scene.anims.generateFrameNumbers(AssetTypes.ShipBullet, {
@@ -56,5 +60,16 @@ export function initializeAnimations(scene: Phaser.Scene) {
     }),
     frameRate: 8,
     repeat: -1,
+  });
+
+  // Explosion
+  scene.anims.create({
+    key: AnimationTypes.Explosion,
+    frames: scene.anims.generateFrameNumbers(AssetTypes.Explosion, {
+      start: 0,
+      end: 5,
+    }),
+    frameRate: 8,
+    repeat: 0,
   });
 }
