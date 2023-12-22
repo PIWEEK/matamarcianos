@@ -75,6 +75,7 @@ export default class ShipManager {
 
   reset() {
     this.bullets.clear(true, true);
+    this.ship.destroy();
     this.initialize(this.cursorsKeys, this.fireKey);
   }
 
